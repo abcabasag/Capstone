@@ -33,7 +33,7 @@ def username_exists(username):
 def get_latest_request_class_id():
     db = getdblocation()
     cur = db.cursor()
-    cur.execute("SELECT max(Request_class_id) FROM Request_Class")
+    cur.execute("SELECT max(request_class_id) FROM request_class")
     latest_request_class_id = cur.fetchone()
     db.close()
     if latest_request_class_id:
@@ -44,7 +44,7 @@ def get_latest_request_class_id():
 def get_latest_request_number():
     db = getdblocation()
     cur = db.cursor()
-    cur.execute("SELECT Request_number FROM Request_Class ORDER BY Request_Class_ID DESC LIMIT 1")
+    cur.execute("SELECT request_number FROM request_class ORDER BY request_class_id DESC LIMIT 1")
     latest_request_number = cur.fetchone()
     db.close()
     if latest_request_number:
@@ -55,7 +55,7 @@ def get_latest_request_number():
 def get_latest_email():
     db = getdblocation()
     cur = db.cursor()
-    cur.execute("SELECT email FROM Request_Class ORDER BY Request_Class_ID DESC LIMIT 1")
+    cur.execute("SELECT email FROM request_Class ORDER BY request_Class_id DESC LIMIT 1")
     latest_email = cur.fetchone()
     db.close()
     if latest_email:
