@@ -11,8 +11,8 @@ from dash.exceptions import PreventUpdate
 # Importing your app definition from app.py so we can use it
 from app import app
 from apps import commonmodules as cm
-from apps import home, user, login, update_status_request, contactus, signup, view_request, view_cc_list, procurement_list
-from apps.functions import add_cc, firstpage_vdr, firstpage_cc, vehicledispatchrequest, procurement, check_request_cc, check_request_vdr, firstpage_p, check_request_home
+from apps import home, user, login, update_status_request, contactus, signup, view_request, view_cc_list, procurement_list, check_request_home
+from apps.functions import add_cc, firstpage_vdr, firstpage_cc, vehicledispatchrequest, procurement, check_request_cc, check_request_vdr, firstpage_p
 
 CONTENT_STYLE = {
     "margin-top": "4em",
