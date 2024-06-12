@@ -2,13 +2,8 @@ import pandas as pd
 import psycopg2
 
 def getdblocation():
-    db = psycopg2.connect(
-        host="localhost",
-        database="capstonedb",
-        user="postgres",
-        port=5432,
-        password="password",
-    )
+    DATABASE_URL = os.environ['DATABASE_URL']
+    db = psycopg2.connect(DATABASE_URL, sslmode='require')
     return db
 
 def modifydatabase(sql, values):
