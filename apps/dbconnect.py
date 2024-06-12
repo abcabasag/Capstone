@@ -3,8 +3,8 @@ import pandas as pd
 import psycopg2
 
 def getdblocation():
-    DATABASE_URL = os.environ['DATABASE_URL']
-    db = psycopg2.connect(DATABASE_URL, sslmode='require')
+    DATABASE = os.environ['DATABASE']
+    db = psycopg2.connect(DATABASE, sslmode='require')
     return db
 
 def modifydatabase(sql, values):
