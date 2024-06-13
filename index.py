@@ -137,13 +137,16 @@ def displaypage(pathname, currentuserid, currentrole):
                         '/functions/check_request_vdr',
                         '/functions/firstpage_vdr',
                         '/functions/firstpage_cc',
-                        '/contactus', '/view_request', '/login','/functions/add_cc', '/functions/vehicledispatchrequest', '/functions/procurement']:
+                        '/contactus', '/view_request', '/signup','/login','/functions/add_cc', '/functions/vehicledispatchrequest', '/functions/procurement']:
             if pathname == '/contactus':
                 navbar = html.Div(cm.sidebar)
                 page_content = contactus.layout
             elif pathname == '/login':
                 navbar = html.Div(cm.sidebar)
                 page_content = login.layout
+            elif pathname == '/signup':
+                navbar = html.Div(cm.adminloginsidebar)
+                page_content = signup.layout
             elif pathname == '/view_request':
                 navbar = html.Div(cm.sidebar)
                 page_content = view_request.layout
