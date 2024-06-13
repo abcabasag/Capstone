@@ -33,6 +33,7 @@ sidebar = html.Div(
                 dbc.NavLink("Home", href="/" or "/home", active="exact"),
                 dbc.NavLink("Check Request Status", href="/check_request_home" or "/functions/check_request_cc" or "/functions/check_request_vdr", active="exact"),
                 dbc.NavLink("Contact Us", href="/contactus", active="exact"),
+                dbc.NavLink("Sign up", href="/signup", active="exact"),
                 dbc.NavLink("Login", href="/login", active="exact"),
             ],
             vertical=True,
