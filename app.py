@@ -14,7 +14,7 @@ app.css.config.serve_locally = True
 # Enables your app to run offline
 app.scripts.config.serve_locally = True
 # Set app title that appears in your browser tab
-app.title = 'IE 172 Case'
+app.title = 'UP NCTS Request Management System'
 # These 2 lines reduce the logs on your terminal so you could debug better
 # when you encounter errors in app
 log = logging.getLogger('werkzeug')
