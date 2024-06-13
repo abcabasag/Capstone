@@ -46,7 +46,7 @@ layout = html.Div(
                                                 dbc.Input(
                                                     type='text',
                                                     id='VDR_requestfilter',
-                                                    placeholder='Request Number, Requestor Last Name, or Vehicle Type'
+                                                    placeholder='Request Number, Requestor First Name, Requestor Last Name, Vehicle Type, or Purpose'
                                                 ),
                                                 width=5
                                             ),
