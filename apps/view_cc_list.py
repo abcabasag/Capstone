@@ -46,7 +46,7 @@ layout = html.Div(
                                                 dbc.Input(
                                                     type='text',
                                                     id='cc_requestfilter',
-                                                    placeholder='Request Number, Requestor Last Name, or Request Type'
+                                                    placeholder='Request Number, Requestor First Name, Requestor Last Name, or Request Type'
                                                 ),
                                                 width=5
                                             ),
