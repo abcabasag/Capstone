@@ -58,7 +58,7 @@ layout = html.Div(
                                                 dbc.Input(
                                                     type='text',
                                                     id='pr_requestfilter',
-                                                    placeholder='Request Number, Requestor Last Name, or Item'
+                                                    placeholder='Request Number, Requestor First Name, Requestor Last Name, or Item'
                                                 ),
                                                 width=5
                                             ),
