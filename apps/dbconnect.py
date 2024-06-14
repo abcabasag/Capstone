@@ -62,3 +62,14 @@ def get_latest_email():
         return latest_email[0]
     else:
         return None
+
+def get_requestor_name_by_email(email):
+    db = getdblocation()
+    cur = db.cursor()
+    cur.execute("SELECT rc_first_name, rc_last_name FROM request_class WHERE email = %s", (email,))
+    requestor = cur.fetchone()
+    db.close()
+    if requestor:
+        return f"{requestor[0]} {requestor[1]}"
+    else:
+        return None
