@@ -297,27 +297,27 @@ def VDR_saveprofile(submitbtn,
 
                 # Prepare the modal body content with the updated request number
                 modal_body_content = dbc.ModalBody(
-                    html.Div(
-                        [
-                            dbc.ModalHeader(
+                html.Div(
+                    [
+                        dbc.ModalHeader(
                             html.H4('Submission Successful', style={"color": "#0056b3"})  # Modal header with blue color
                         ),
-                            html.Div('Your Citizen Charter Request has been successfully submitted.', style={'text-align': 'center'}),
-                            html.Br(),
-                            html.Div(latest_request_number, style={'text-align': 'center', 'font-size': '40px', 'font-weight': 'bold'}),
-                            html.Br(),
-                            html.Div('is your Request Number for tracking purposes.', style={'text-align': 'center'}),
-                            dbc.ModalFooter(
+                        html.Div('Your Citizen Charter Request has been successfully submitted.', style={'text-align': 'center'}),
+                        html.Br(),
+                        html.Div(latest_request_number, style={'text-align': 'center', 'font-size': '40px', 'font-weight': 'bold'}),
+                        html.Br(),
+                        html.Div('is your Request Number for tracking purposes.', style={'text-align': 'center'}),
+                        dbc.ModalFooter(
                             dbc.Button(
                                 "Finish",
                                 href='/home',
                                 color="primary"  # Blue button
                             )
                         )
-                        ]
-                    )
+                    ],
+                    hide_close_button=True  # Hide the close button for the modal body
                 )
-
+            )
             loading_style = {"display": "none"}  # Hide loading spinner after processing
             return [alert_color, alert_text, alert_open, modal_open, modal_body_content, loading_style]
         else: 
