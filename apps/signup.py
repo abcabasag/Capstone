@@ -88,7 +88,7 @@ layout = html.Div(
                 dbc.ModalBody("User has been saved", id='signup_confirmation'),
                 dbc.ModalFooter(
                     dbc.Button(
-                        "Okay", href='/'
+                        "Okay", href='/user'
                     )
                 ),
             ],
