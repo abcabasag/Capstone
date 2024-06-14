@@ -12,16 +12,16 @@ from apps.dbconnect import get_latest_request_class_id, get_latest_request_numbe
 
 import os
 
-EMAIL_ADDRESS = os.getenv('scmilay@up.edu.ph')
-EMAIL_PASSWORD = os.getenv('brqd mkap mndt zibx')
+EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
+EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email(to_address, subject, body):
-    EMAIL_ADDRESS = "scmilay@up.edu.ph"
-    EMAIL_PASSWORD = "brqd mkap mndt zibx"
+    EMAIL_ADDRESS = "upncts@up.edu.ph"
+    EMAIL_PASSWORD = "mzdg spet exnp qbax"
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = to_address
@@ -244,7 +244,7 @@ def PR_saveprofile(submitbtn,
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
-                to_address_ncts = "genesiscabasag@gmail.com"
+                to_address_ncts = "upncts@up.edu.ph"
                 subject_ncts = "New Procurement Request"
                 body_ncts = f"A new Procurement Request has been submitted.\n\nRequest Number: {latest_request_number}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
                 send_email(to_address_ncts, subject_ncts, body_ncts)
