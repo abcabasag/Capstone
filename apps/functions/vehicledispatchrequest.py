@@ -29,12 +29,13 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def send_email(to_address, subject, body):
+def send_email(to_address, cc_address, subject, body):
     EMAIL_ADDRESS = "upncts@up.edu.ph"
     EMAIL_PASSWORD = "mzdg spet exnp qbax"
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = to_address
+    msg['Cc'] = cc_address
     msg['Subject'] = subject
 
     msg.attach(MIMEText(body, 'plain'))
