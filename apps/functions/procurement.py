@@ -20,7 +20,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email(to_address, subject, body):
-    EMAIL_ADDRESS = "ahmerced@up.edu.ph"
+    EMAIL_ADDRESS = "upncts@up.edu.ph"
     EMAIL_PASSWORD = "mzdg spet exnp qbax"
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
