@@ -646,7 +646,7 @@ def VDR_saveprofile(submitbtn,
                 sql_requestor = '''
                     SELECT rc_first_name, rc_last_name FROM request_class WHERE request_class_id = %s
                 '''
-                result = db.querydata(sql_requestor, (request_class_id,))
+                result = db.querydatafromdatabase(sql_requestor, (request_class_id,))
                 if result:
                     requestor_name = f"{result[0]['rc_first_name']} {result[0]['rc_last_name']}"
 
