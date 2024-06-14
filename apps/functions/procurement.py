@@ -238,15 +238,18 @@ def PR_saveprofile(submitbtn,
                 latest_request_number = get_latest_request_number()
                 latest_email = get_latest_email()
 
+                # Fetch requestor's name from request_class table based on email
+                requestor_name_p = db.get_requestor_name_by_email(request_class_id)
+
                 to_address_requestor = latest_email
                 subject_requestor = "New Procurement Request"
-                body_requestor = f"Your Procurement Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
+                body_requestor = f"Your Procurement Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name_p}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
                 to_address_ncts = "upncts@up.edu.ph"
                 subject_ncts = "New Procurement Request"
-                body_ncts = f"A new Procurement Request has been submitted.\n\nRequest Number: {latest_request_number}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
+                body_ncts = f"A new Procurement Request has been submitted.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name_p}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
                 send_email(to_address_ncts, subject_ncts, body_ncts)
 
                 # Prepare the modal body content with the updated request number
