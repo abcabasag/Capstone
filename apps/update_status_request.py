@@ -98,16 +98,6 @@ layout = html.Div(
 )
 
 @app.callback(
-    Output('gen_submit', 'disabled'),  # Update the 'disabled' property of the button
-    Input('status_dropdown', 'value'),
-    Input('gen_remarks', 'value')
-)
-def update_button_status(selected_status, remarks):
-    if not selected_status or not remarks:
-        return True  # Disable the button if either the status dropdown or remarks are empty
-    return False  # Enable the button if both the status dropdown and remarks are filled in
-
-@app.callback(
     Output('gen_successmodal', 'is_open'),
     Input('gen_submit', 'n_clicks'),
     [
