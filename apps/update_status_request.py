@@ -112,7 +112,7 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         raise PreventUpdate
 
     if not selected_status or not remarks:
-        return False
+        return dbc.Alert("Please select a status and enter remarks.", color="danger", is_open=True)
 
     request_class_id = parse_qs(search)['id'][0]
 
