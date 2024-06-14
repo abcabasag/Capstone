@@ -141,3 +141,4 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
     return True
+
