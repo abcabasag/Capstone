@@ -247,7 +247,7 @@ def PR_saveprofile(submitbtn,
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
-                to_address_ncts = "ahmerced@up.edu.ph"
+                to_address_ncts = "scmilay@up.edu.ph"
                 subject_ncts = "New Procurement Request"
                 body_ncts = f"A new Procurement Request has been submitted.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name_p}\nItem/s: {PR_item}\nQuantity: {PR_quantity}\nRemarks: {PR_remarks}"
                 send_email(to_address_ncts, subject_ncts, body_ncts)
