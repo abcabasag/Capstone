@@ -660,7 +660,7 @@ def VDR_saveprofile(submitbtn,
                 to_address_requestor = latest_email
                 subject_requestor = "New Vehicle Dispatch Request"
                 body_requestor = f"Your Vehicle Dispatch Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nPurpose Details: {VDR_purpose_others}\nPassenger/s: {VDR_passenger}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
-                send_email(to_address_requestor, subject_requestor, body_requestor)
+                send_email(to_address_requestor, None, subject_requestor, body_requestor)
 
                 # Send email notification with the label
                 to_address_ncts = "abcabasag@up.edu.ph"
