@@ -108,11 +108,11 @@ layout = html.Div(
     ]
 )
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
-    if n_clicks is None:
+    if n_clicks == 0:
         raise PreventUpdate
 
     if not selected_status or not remarks:
-        return dbc.Alert("Please select a status and enter remarks.", color="danger", is_open=True)
+        return False
 
     request_class_id = parse_qs(search)['id'][0]
 
