@@ -641,6 +641,15 @@ def VDR_saveprofile(submitbtn,
                 latest_request_number = get_latest_request_number()
                 latest_email = get_latest_email()
 
+                # Fetch requestor's name from request_class table based on email
+                requestor_name = ""
+                sql_requestor = '''
+                    SELECT rc_first_name, rc_last_name FROM request_class WHERE request_class_id = %s
+                '''
+                result = db.querydata(sql_requestor, (vdr_email,))
+                if result:
+                    requestor_name = f"{result[0]['rc_first_name']} {result[0]['rc_last_name']}"
+
                 selected_label_vehicle = None
                 for option in VDR_vehicle_options:
                     if option['value'] == VDR_vehicle:
@@ -655,13 +664,13 @@ def VDR_saveprofile(submitbtn,
 
                 to_address_requestor = latest_email
                 subject_requestor = "New Vehicle Dispatch Request"
-                body_requestor = f"Your Vehicle Dispatch Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
+                body_requestor = f"Your Vehicle Dispatch Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nPurpose Details: {VDR_purpose_others}\nPassenger/s: {VDR_passenger}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
                 to_address_ncts = "genesiscabasag@gmail.com"
                 subject_ncts = "New Vehicle Dispatch Request"
-                body_ncts = f"A new Vehicle Dispatch Request has been submitted.\n\nRequest Number: {latest_request_number}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
+                body_ncts = f"A new Vehicle Dispatch Request has been submitted.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nPurpose Details: {VDR_purpose_others}\nPassenger/s: {VDR_passenger}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
                 send_email(to_address_ncts, subject_ncts, body_ncts)
 
                 # Prepare the modal body content with the updated request number
