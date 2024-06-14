@@ -108,7 +108,7 @@ layout = html.Div(
     ]
 )
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
-    if n_clicks == 0:
+    if n_clicks is None:
         raise PreventUpdate
 
     if not selected_status or not remarks:
@@ -141,4 +141,3 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
     return True
-
