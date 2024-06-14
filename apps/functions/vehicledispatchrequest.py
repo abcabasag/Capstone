@@ -124,11 +124,11 @@ layout = html.Div(
                             ),
                             width=4
                         ),
-                        dbc.Label("Other Purpose", width=1, style={"color": "#0056b3"}),  # Label with blue color
+                        dbc.Label("Purpose Details", width=1, style={"color": "#0056b3"}),  # Label with blue color
                         dbc.Col(
                             dbc.Textarea(
                                 id='VDR_purpose_others',
-                                placeholder='If others, please specify the purpose',
+                                placeholder='Please input purpose specifications',
                                 style={'width': '100%', "border": "1px solid #0056b3"}  # Blue border for textarea
                             ),
                             width=6,
@@ -520,18 +520,14 @@ def VDR_saveprofile(submitbtn,
                 alert_open = True
                 alert_color = 'danger'
                 alert_text = 'Check your inputs. Please select the vehicle to be borrowed.'
-            elif not VDR_driver:
-                alert_open = True
-                alert_color = 'danger'
-                alert_text = 'Check your inputs. Please input name of driver.'
             elif not VDR_purpose:
                 alert_open = True
                 alert_color = 'danger'
                 alert_text = 'Check your inputs. Please select the purpose of request.'
-            elif VDR_purpose == 3 and not VDR_purpose_others:  # Check if purpose is "Others" and VDR_purpose_others is empty
+            elif not VDR_purpose_others:
                 alert_open = True
                 alert_color = 'danger'
-                alert_text = 'Check your inputs. Please specify the purpose if "Others" is selected.'
+                alert_text = 'Check your inputs. Please specify purpose details.'
             elif not VDR_passenger:
                 alert_open = True
                 alert_color = 'danger'
