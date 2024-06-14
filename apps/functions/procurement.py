@@ -69,7 +69,7 @@ layout = html.Div(
                             html.Div([
                                 html.A(
                                     'Click here to upload an image',
-                                    href='https://drive.google.com/drive/folders/1kN8-KtJGSB8fu4rISEjap68HfI1AMsdl?usp=sharing',
+                                    href='https://drive.google.com/drive/folders/1El-LfjhHapxq4TSEalfHcAiNtNVlONik?usp=sharing',
                                     target="_blank"  # Added target="_blank" to open link in a new tab
                                 ),
                                 html.Br(), 
