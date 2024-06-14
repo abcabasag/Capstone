@@ -274,6 +274,9 @@ def VDR_saveprofile(submitbtn,
                 latest_request_number = get_latest_request_number()
                 latest_email = get_latest_email()
 
+                # Fetch requestor's name from request_class table based on email
+                requestor_name_cc = db.get_requestor_name_by_email(request_class_id)
+
                 selected_label_cc = None
                 for option in ccrequesttype_options:
                     if option['value'] == ccrequesttype:
@@ -282,13 +285,13 @@ def VDR_saveprofile(submitbtn,
 
                 to_address_requestor = latest_email
                 subject_requestor = "New Citizen Charter Request"
-                body_requestor = f"Your Citizen Charter Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}\nRequest Type: {selected_label_cc}\nRemarks: {add_cc_remarks}"
+                body_requestor = f"Your Citizen Charter Request has been submitted. You can check its progress in the Check Request Status Tab using your Request Number.\n\nRequest Number: {latest_request_number}nRequestor: {requestor_name_cc}\nRequest Type: {selected_label_cc}\nRemarks: {add_cc_remarks}"
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
                 to_address_ncts = "upncts@up.edu.ph"
                 subject_ncts = "New Citizen Charter Request"
-                body_ncts = f"A new Citizen Charter Request has been submitted.\n\nRequest Number: {latest_request_number}\nRequest Type: {selected_label_cc}\nRemarks: {add_cc_remarks}"
+                body_ncts = f"A new Citizen Charter Request has been submitted.\n\nRequest Number: {latest_request_number}nRequestor: {requestor_name_cc}\nRequest Type: {selected_label_cc}\nRemarks: {add_cc_remarks}"
                 send_email(to_address_ncts, subject_ncts, body_ncts)
 
                 # Prepare the modal body content with the updated request number
