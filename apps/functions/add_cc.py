@@ -123,7 +123,8 @@ layout = html.Div(
             ],
             centered=True,
             id='add_cc_successmodal',
-            backdrop='static'
+            backdrop='static',
+            hide_close_button=True  # Add this line to hide the close button
         )
     ],
     style={"maxWidth": "1600px", "margin-left": "220px"}
