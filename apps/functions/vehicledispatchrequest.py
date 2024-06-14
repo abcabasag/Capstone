@@ -29,12 +29,13 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def send_email(to_address, subject, body):
+def send_email(to_address, cc_address, subject, body):
     EMAIL_ADDRESS = "mgmartinez6@up.edu.ph"
     EMAIL_PASSWORD = "mzdg spet exnp qbax"
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = to_address
+    msg['Cc'] = cc_address
     msg['Subject'] = subject
 
     msg.attach(MIMEText(body, 'plain'))
@@ -662,10 +663,11 @@ def VDR_saveprofile(submitbtn,
                 send_email(to_address_requestor, subject_requestor, body_requestor)
 
                 # Send email notification with the label
-                to_address_ncts = "mgmartinez6@up.edu.ph"
+                to_address_ncts = "abcabasag@up.edu.ph"
+                cc_address_ncts = "genesiscabasag@gmail.com"
                 subject_ncts = "New Vehicle Dispatch Request"
                 body_ncts = f"A new Vehicle Dispatch Request has been submitted.\n\nRequest Number: {latest_request_number}\nRequestor: {requestor_name}\nVehicle Type: {selected_label_vehicle}\nPurpose: {selected_label_purpose}\nPurpose Details: {VDR_purpose_others}\nPassenger/s: {VDR_passenger}\nDestination: {VDR_destination}\nDeparture Date: {VDR_departure_date}\nDeparture Time: {VDR_departure_time}\nLength of Trip: {trip_length_combined}\nMode of Borrowing: {VDR_drop_pick}\nRemarks: {VDR_remarks}"
-                send_email(to_address_ncts, subject_ncts, body_ncts)
+                send_email(to_address_ncts, cc_address_ncts, subject_ncts, body_ncts)
 
                 # Prepare the modal body content with the updated request number
                 modal_body_content = dbc.ModalBody(
