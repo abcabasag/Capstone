@@ -642,13 +642,7 @@ def VDR_saveprofile(submitbtn,
                 latest_email = get_latest_email()
 
                 # Fetch requestor's name from request_class table based on email
-                requestor_name = ""
-                sql_requestor = '''
-                    SELECT rc_first_name, rc_last_name FROM request_class WHERE request_class_id = %s
-                '''
-                result = db.querydatafromdatabase(sql_requestor, (request_class_id,))
-                if result:
-                    requestor_name = f"{result[0]['rc_first_name']} {result[0]['rc_last_name']}"
+                requestor_name = db.get_requestor_name_by_email(request_class_id)
 
                 selected_label_vehicle = None
                 for option in VDR_vehicle_options:
