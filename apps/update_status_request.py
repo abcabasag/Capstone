@@ -22,7 +22,7 @@ layout = html.Div(
             [
                 dbc.Row(
                     [
-                        dbc.Label("Status", width=1, style={"color": "#0056b3"}),
+                        dbc.Label("Status", width=2, style={"color": "#0056b3"}),
                         dbc.Col(
                             dcc.Dropdown(
                                 id='status_dropdown',
@@ -36,14 +36,14 @@ layout = html.Div(
                                 placeholder='Select status',
                                 style={"border": "1px solid #0056b3"}  # Blue border for dropdown
                             ),
-                            width=4
+                            width=5
                         )
                     ],
                     style={"margin-bottom": "20px"}
                 ),
                 dbc.Row(
                     [
-                        dbc.Label("Remarks", width=1, style={"color": "#0056b3"}),
+                        dbc.Label("Remarks", width=2, style={"color": "#0056b3"}),
                         dbc.Col(
                             dcc.Textarea(
                                 id='gen_remarks',
@@ -113,7 +113,7 @@ layout = html.Div(
     ]
 )
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
-    if n_clicks == 0:
+    if n_clicks is None:
         raise PreventUpdate
 
     if not selected_status and not remarks:
@@ -150,4 +150,5 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
     return True, "", "", False
+
 
