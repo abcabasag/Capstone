@@ -552,7 +552,7 @@ def VDR_saveprofile(submitbtn,
             elif not VDR_drop_pick:
                 alert_open = True
                 alert_color = 'danger'
-                alert_text = 'Check your inputs. Please select mode of claiming the vehicle.'
+                alert_text = 'Check your inputs. Please select mode of borrowing the vehicle.'
             elif VDR_drop_pick == 'pickup' and not VDR_pickup_time:
                 alert_open = True
                 alert_color = 'danger'
