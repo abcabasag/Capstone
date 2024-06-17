@@ -38,7 +38,8 @@ layout = html.Div(
                             ),
                             width=4
                         )
-                    ]
+                    ],
+                    style={"margin-bottom": "20px"}
                 ),
                 dbc.Row(
                     [
@@ -52,7 +53,8 @@ layout = html.Div(
                             width=5,
                         )
                     ],
-                    className='mb-3 align-items-center'
+                    className='mb-3 align-items-center',
+                    style={"margin-bottom": "20px"}
                 ),
                 dbc.Row(
                     [
@@ -99,6 +101,9 @@ layout = html.Div(
 
 @app.callback(
     Output('gen_successmodal', 'is_open'),
+    Output('gen_alert', 'children'),
+    Output('gen_alert', 'color'),
+    Output('gen_alert', 'is_open'),
     Input('gen_submit', 'n_clicks'),
     [
         State('url', 'search'),
@@ -111,10 +116,12 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
     if n_clicks == 0:
         raise PreventUpdate
 
-    if not selected_status:
-        return dbc.Alert("Please select a status.", color="danger", is_open=True)
+    if not selected_status and not remarks:
+        return False, "Please select a status and input remarks.", "danger", True
+    elif not selected_status:
+        return False, "Please select a status.", "danger", True
     elif not remarks:
-        return dbc.Alert("Please input remarks.", color="danger", is_open=True)
+        return False, "Please input remarks.", "danger", True
 
     request_class_id = parse_qs(search)['id'][0]
 
@@ -142,4 +149,5 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         """
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
-    return True
+    return True, "", "", False
+
