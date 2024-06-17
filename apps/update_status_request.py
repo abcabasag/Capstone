@@ -98,7 +98,12 @@ layout = html.Div(
 )
 
 @app.callback(
-    Output('gen_successmodal', 'is_open'),
+    [
+        Output('gen_successmodal', 'is_open'),
+        Output('gen_alert', 'is_open'),
+        Output('gen_alert', 'children'),
+        Output('gen_alert', 'color')
+    ],
     Input('gen_submit', 'n_clicks'),
     [
         State('url', 'search'),
@@ -112,9 +117,19 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         raise PreventUpdate
 
     if not selected_status or not remarks:
-        return dbc.Alert("Please select a status and enter remarks.", color="danger", is_open=True)
+        return False, True, "Please select a status and enter remarks.", "danger"
 
     request_class_id = parse_qs(search)['id'][0]
+
+    update_status_query = """
+    UPDATE Status_Change 
+    SET Current_Status = %s, 
+        Date_updated = CURRENT_DATE, 
+        Remarks_statchange = %s,
+        Status_ID = (SELECT Status_ID FROM Status WHERE Status_Name = %s),
+        user_id = %s  -- Store the user ID who made the change
+    WHERE Request_Class_ID = %s;
+    """
 
     if selected_status == "Approved":
         update_status_query = """
@@ -129,15 +144,6 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         """
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
     else:
-        update_status_query = """
-        UPDATE Status_Change 
-        SET Current_Status = %s, 
-            Date_updated = CURRENT_DATE, 
-            Remarks_statchange = %s,
-            Status_ID = (SELECT Status_ID FROM Status WHERE Status_Name = %s),
-            user_id = %s  -- Store the user ID who made the change
-        WHERE Request_Class_ID = %s;
-        """
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
-    return True
+    return True, False, "", ""  # Close alert and open modal
