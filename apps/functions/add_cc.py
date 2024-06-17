@@ -228,7 +228,7 @@ def VDR_saveprofile(submitbtn,
             elif not add_cc_remarks:
                 alert_open = True
                 alert_color = 'danger'
-                alert_text = 'Check your inputs. Please input name of driver.'
+                alert_text = 'Check your inputs. Please input remarks.'
             else:
                 sql = '''
                     INSERT INTO Citizen_Charter_Request (
