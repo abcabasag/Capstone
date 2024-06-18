@@ -117,13 +117,13 @@ layout = html.Div(
     ]
 )
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
-    if n_clicks is None:
-        raise PreventUpdate
-    else:
-        if not selected_status:
-            return False, "Please select a status.", "danger", True
-        elif not remarks:
-            return False, "Please input remarks.", "danger", True
+    if n_clicks is None or n_clicks == 0:
+        return False, "", "", False
+
+    if not selected_status:
+        return False, "Please select a status.", "danger", True
+    elif not remarks:
+        return False, "Please input remarks.", "danger", True
             
     request_class_id = parse_qs(search)['id'][0]
 
@@ -151,4 +151,5 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         """
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
-    return False, "", "", False
+    # If everything is successful, show the success modal
+    return True, "", "", False
