@@ -19,9 +19,9 @@ from apps import dbconnect as db
 notified_requests = set()
 
 def calculate_pending_minutes(date_requested):
-# Calculate the difference in minutes between date_requested and now
-minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
-return minutes_pending
+    # Calculate the difference in minutes between date_requested and now
+    minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
+    return minutes_pending
 
 EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
 EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
