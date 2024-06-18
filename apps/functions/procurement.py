@@ -125,7 +125,7 @@ layout = html.Div(
                     [
                         html.Label("Click the 'Submit' button "),
                         html.Span(" ONCE", style={"font-weight": "bold"}),
-                        html.Label(". Wait for the Request Number to pop up, then click 'Finish' button."),
+                        html.Label(". Wait for the Request Number to pop up, then click the 'Finish' button."),
                     ],
                     width={"size": 8, "offset": 2},  # Adjusted width for better centering and spacing
                     style={"text-align": "center", "margin-top": "10px"}  # Centering the content and adding margin at the top
