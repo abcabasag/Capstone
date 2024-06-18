@@ -26,19 +26,18 @@ def calculate_pending_minutes(date_requested):
 EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
 EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
 
-def send_pending_notification(current_status, request_number):
-    if current_status == "Pending":
-        subject = 'Citizen Charter Request Pending for 3 Minutes'
-        body = f"Good day,\n\nRequest {request_number} has been pending for 3 minutes.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
-        msg = MIMEMultipart()
-        msg['From'] = EMAIL_ADDRESS
-        msg['To'] = 'janmaeavila@gmail.com'  # Update with recipient's email
-        msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            server.send_message(msg)
+def send_pending_notification(request_number):
+    subject = 'Citizen Charter Request Pending for 3 Minutes'
+    body = f"Good day,\n\nRequest {request_number} has been pending for 3 minutes.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
+    msg = MIMEMultipart()
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = 'janmaeavila@gmail.com'  # Update with recipient's email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.send_message(msg)
 
 layout = html.Div(
     [
@@ -234,14 +233,13 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_inter
             if 'Date Requested' in df.columns:
                 df['Date Requested'] = pd.to_datetime(df['Date Requested'])  # Ensure 'Date Requested' is datetime type
                 df['Pending Minutes'] = df['Date Requested'].apply(calculate_pending_minutes)
-                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] < 4) & (df['Current Status'] == 'Pending')]
+                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] < 4)]
                 # Iterate over pending requests to send notifications
                 for index, row in pending_requests.iterrows():
                     request_number = row['Request Number']
-                    current_status = row['Current Status']
 
                     if request_number not in notified_requests:
-                        send_pending_notification(current_status, request_number)
+                        send_pending_notification(request_number)
                         notified_requests.add(request_number)
 
             # Remove 'Pending Minutes' column before displaying the table
