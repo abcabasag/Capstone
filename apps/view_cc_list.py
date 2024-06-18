@@ -1,7 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
-from dash import html
+import dash_html_components as html
 import pandas as pd
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -11,22 +11,24 @@ import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from app import app
 from apps import dbconnect as db
 
 # Set to track notified request numbers
 notified_requests = set()
 
-# Function to calculate pending minutes
 def calculate_pending_minutes(date_requested):
-    # Calculate the difference in minutes between date_requested and now
-    minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
-    return minutes_pending
+# Calculate the difference in minutes between date_requested and now
+minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
+return minutes_pending
 
 EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
 EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
 
 def send_pending_notification(request_number):
+    EMAIL_ADDRESS = "upncts@up.edu.ph"
+    EMAIL_PASSWORD = "mzdg spet exnp qbax"
     subject = 'Citizen Charter Request Pending for 3 Minutes'
     body = f"Good day,\n\nRequest {request_number} has been pending for 3 minutes.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
     msg = MIMEMultipart()
@@ -233,7 +235,7 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_inter
             if 'Date Requested' in df.columns:
                 df['Date Requested'] = pd.to_datetime(df['Date Requested'])  # Ensure 'Date Requested' is datetime type
                 df['Pending Minutes'] = df['Date Requested'].apply(calculate_pending_minutes)
-                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] < 4)]
+                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] <= 3.99)]
                 # Iterate over pending requests to send notifications
                 for index, row in pending_requests.iterrows():
                     request_number = row['Request Number']
