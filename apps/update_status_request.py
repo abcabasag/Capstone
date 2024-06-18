@@ -115,9 +115,6 @@ layout = html.Div(
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
     if n_clicks is None:
         raise PreventUpdate
-
-    if not selected_status and not remarks:
-        return False, "Please select a status and input remarks.", "danger", True
     elif not selected_status:
         return False, "Please select a status.", "danger", True
     elif not remarks:
