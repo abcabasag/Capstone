@@ -133,6 +133,11 @@ layout = html.Div(
                         )
                     ]
                 ),
+                dbc.Row(
+                    dbc.Col(
+                            dbc.Label("Click the button only once.", style={"color": "#0056b3", "text-align": "left"}), width=2  # Label with blue color
+                        ),
+                ),
             ]
         ),
         dbc.Modal(
