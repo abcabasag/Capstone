@@ -133,11 +133,6 @@ layout = html.Div(
                         )
                     ]
                 ),
-                dbc.Row(
-                   dbc.Col(
-                            dbc.Label("Click once", style={"color": "#0056b3"}), width=2  # Label with blue color
-                        ),
-                )
             ]
         ),
         dbc.Modal(
