@@ -135,8 +135,9 @@ layout = html.Div(
                 ),
                 dbc.Row(
                     dbc.Col(
-                            dbc.Label("Click the button only once.", style={"color": "#0056b3", "text-align": "center"}), width=2  # Label with blue color
-                        ),
+                        dbc.Label("Click the button only once.", style={"color": "#0056b3", "text-align": "center"}), 
+                        width={"size": 2, "offset": 5}  # Centering the column with offset
+                    ),
                 ),
             ]
         ),
