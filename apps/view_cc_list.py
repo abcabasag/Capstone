@@ -23,8 +23,8 @@ def calculate_pending_minutes(date_requested):
     minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
     return minutes_pending
 
-EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
-EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
+EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
 
 def send_pending_notification(current_status, request_number):
     if current_status == "Pending":
