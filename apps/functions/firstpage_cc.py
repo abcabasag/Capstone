@@ -132,6 +132,11 @@ layout = html.Div(
                             width={"size": 2, "offset": 5}
                         )
                     ]
+                ),
+                dbc.Row(
+                   dbc.Col(
+                            dbc.Label("Click once", style={"color": "#0056b3"}), width=2  # Label with blue color
+                        ),
                 )
             ]
         ),
