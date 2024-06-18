@@ -11,29 +11,25 @@ import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-# Let us import the app object in case we need to define callbacks here
 from app import app
-# for DB needs
 from apps import dbconnect as db
 
 # Set to track notified request numbers
 notified_requests = set()
 
-# Function to calculate pending days
+# Function to calculate pending minutes
 def calculate_pending_minutes(date_requested):
-    # Calculate the difference in days between date_requested and now
+    # Calculate the difference in minutes between date_requested and now
     minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
     return minutes_pending
 
-EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
-EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 
 def send_pending_notification(current_status, request_number):
     if current_status == "Pending":
-        EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-        EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-        subject = 'Citizen Charter Request Pending for 3 Days'
-        body = f"Good day,\n\nRequest {request_number} has been pending for 3 days.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
+        subject = 'Citizen Charter Request Pending for 3 Minutes'
+        body = f"Good day,\n\nRequest {request_number} has been pending for 3 minutes.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
         msg = MIMEMultipart()
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = 'janmaeavila@gmail.com'  # Update with recipient's email
@@ -43,7 +39,7 @@ def send_pending_notification(current_status, request_number):
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.send_message(msg)
-            
+
 layout = html.Div(
     [
         dbc.Button(
@@ -56,17 +52,17 @@ layout = html.Div(
         ),
         html.H2('Citizen Charter List'),  # Page Header
         html.Hr(),
-        dbc.Card(  # Card Container
+        dbc.Card(
             [
-                dbc.CardHeader(  # Define Card Header
+                dbc.CardHeader(
                     [
                         html.H3('Manage Records of Citizen Charter Requests')
                     ]
                 ),
-                dbc.CardBody(  # Define Card Contents
+                dbc.CardBody(
                     [
                         html.Hr(),
-                        html.Div(  # Create section to show list of vehicle dispatch requests
+                        html.Div(
                             [
                                 html.H4('Find Request'),
                                 dbc.Form(
@@ -131,10 +127,10 @@ layout = html.Div(
                             ]
                         ),
                         dcc.Interval(
-                        id='interval-component',
-                        interval=60 * 1000,  # Check every 1 minute (milliseconds)
-                        n_intervals=0
-                    )
+                            id='interval-component',
+                            interval=60 * 1000,  # Check every 1 minute (milliseconds)
+                            n_intervals=0
+                        )
                     ]
                 )
             ]
@@ -234,11 +230,11 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_inter
                 "Request Class ID"
             ]
 
-            # Filter for requests pending exactly 3 days and send notifications
+            # Filter for requests pending exactly 3 minutes and send notifications
             if 'Date Requested' in df.columns:
                 df['Date Requested'] = pd.to_datetime(df['Date Requested'])  # Ensure 'Date Requested' is datetime type
                 df['Pending Minutes'] = df['Date Requested'].apply(calculate_pending_minutes)
-                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] <= 3.99) & (df['Current Status'] == 'Pending')]
+                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] < 4) & (df['Current Status'] == 'Pending')]
                 # Iterate over pending requests to send notifications
                 for index, row in pending_requests.iterrows():
                     request_number = row['Request Number']
@@ -248,7 +244,7 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_inter
                         send_pending_notification(current_status, request_number)
                         notified_requests.add(request_number)
 
-            # Remove 'Pending Days' column before displaying the table
+            # Remove 'Pending Minutes' column before displaying the table
             if 'Pending Minutes' in df.columns:
                 df.drop(columns=['Pending Minutes'], inplace=True)
                 
@@ -262,7 +258,6 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_inter
                 ]
             df['Action'] = buttons
             df = df.drop(columns=['Request Class ID'])  # Remove the ID column
-            ### END OF BLOCK ###
 
             table_container_style = {
                 'overflow-x': 'auto',
