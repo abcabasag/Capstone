@@ -135,8 +135,11 @@ layout = html.Div(
                 ),
                 dbc.Row(
                     dbc.Col(
-                        dbc.Label("Click the 'Next' button <strong>ONCE</strong>.", 
-                                  style={"color": "#0056b3", "text-align": "center", "display": "block"}),
+                        [
+                            html.Label("Click the 'Next' button "),
+                            html.Span("ONCE", style={"font-weight": "bold"}),
+                            html.Label("."),
+                        ],
                         width={"size": 2, "offset": 5}  # Centering the column with offset
                     ),
                 ),
