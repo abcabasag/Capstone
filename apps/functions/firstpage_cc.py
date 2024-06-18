@@ -137,7 +137,7 @@ layout = html.Div(
                     dbc.Col(
                         [
                             html.Label("Click the 'Next' button "),
-                            html.Span("ONCE", style={"font-weight": "bold"}),
+                            html.Span(" ONCE", style={"font-weight": "bold"}),
                             html.Label("."),
                         ],
                         width={"size": 2, "offset": 5}  # Centering the column with offset
