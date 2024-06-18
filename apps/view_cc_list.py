@@ -7,12 +7,43 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from datetime import datetime, timedelta
 from io import StringIO
-
+import smtplib
+import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 # Let us import the app object in case we need to define callbacks here
 from app import app
 # for DB needs
 from apps import dbconnect as db
 
+# Set to track notified request numbers
+notified_requests = set()
+
+# Function to calculate pending days
+def calculate_pending_minutes(date_requested):
+    # Calculate the difference in days between date_requested and now
+    minutes_pending = (datetime.now() - date_requested).total_seconds() / 60
+    return minutes_pending
+
+EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
+EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
+
+def send_pending_notification(current_status, request_number):
+    if current_status == "Pending":
+        EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+        EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+        subject = 'Citizen Charter Request Pending for 3 Days'
+        body = f"Good day,\n\nRequest {request_number} has been pending for 3 days.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_ADDRESS
+        msg['To'] = 'janmaeavila@gmail.com'  # Update with recipient's email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            server.send_message(msg)
+            
 layout = html.Div(
     [
         dbc.Button(
@@ -98,7 +129,12 @@ layout = html.Div(
                                     id='cc_requestlist'
                                 )
                             ]
-                        )
+                        ),
+                        dcc.Interval(
+                        id='interval-component',
+                        interval=60 * 1000,  # Check every 1 minute (milliseconds)
+                        n_intervals=0
+                    )
                     ]
                 )
             ]
@@ -116,10 +152,11 @@ layout = html.Div(
         Input('url', 'pathname'),
         Input('cc_requestfilter', 'value'),
         Input('ccdate_from', 'date'),  
-        Input('ccdate_to', 'date')
+        Input('ccdate_to', 'date'),
+        Input('interval-component', 'n_intervals')
     ]
 )
-def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to):
+def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to, n_intervals):
     if pathname == '/view_cc_list':
         CCcolumns_to_select = [
             "cc_request_id",
@@ -197,6 +234,24 @@ def cchome_loadrequestlist(pathname, searchterm, ccdate_from, ccdate_to):
                 "Request Class ID"
             ]
 
+            # Filter for requests pending exactly 3 days and send notifications
+            if 'Date Requested' in df.columns:
+                df['Date Requested'] = pd.to_datetime(df['Date Requested'])  # Ensure 'Date Requested' is datetime type
+                df['Pending Minutes'] = df['Date Requested'].apply(calculate_pending_minutes)
+                pending_requests = df[(df['Pending Minutes'] >= 3) & (df['Pending Minutes'] <= 3.99) & (df['Current Status'] == 'Pending')]
+                # Iterate over pending requests to send notifications
+                for index, row in pending_requests.iterrows():
+                    request_number = row['Request Number']
+                    current_status = row['Current Status']
+
+                    if request_number not in notified_requests:
+                        send_pending_notification(current_status, request_number)
+                        notified_requests.add(request_number)
+
+            # Remove 'Pending Days' column before displaying the table
+            if 'Pending Minutes' in df.columns:
+                df.drop(columns=['Pending Minutes'], inplace=True)
+                
             buttons = []
             for request_class_id in df['Request Class ID']:
                 buttons += [
