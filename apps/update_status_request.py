@@ -100,16 +100,20 @@ layout = html.Div(
 )
 
 @app.callback(
-    Output('gen_successmodal', 'is_open'),
-    Output('gen_alert', 'children'),
-    Output('gen_alert', 'color'),
-    Output('gen_alert', 'is_open'),
-    Input('gen_submit', 'n_clicks'),
+    [
+        Output('gen_successmodal', 'is_open'),
+        Output('gen_alert', 'children'),
+        Output('gen_alert', 'color'),
+        Output('gen_alert', 'is_open')
+    ],
+    [
+        Input('gen_submit', 'n_clicks')
+    ],
     [
         State('url', 'search'),
         State('status_dropdown', 'value'),
         State('gen_remarks', 'value'),
-        State('currentuserid', 'data')  # Get the user ID from session data
+        State('currentuserid', 'data')
     ]
 )
 def update_status(n_clicks, search, selected_status, remarks, currentuserid):
@@ -147,6 +151,4 @@ def update_status(n_clicks, search, selected_status, remarks, currentuserid):
         """
         db.modifydatabase(update_status_query, [selected_status, remarks, selected_status, currentuserid, request_class_id])
 
-    return True, "", "", False
-
-
+    return False, "", "", False
