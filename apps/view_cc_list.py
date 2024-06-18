@@ -27,8 +27,6 @@ EMAIL_ADDRESS = os.getenv('upncts@up.edu.ph')
 EMAIL_PASSWORD = os.getenv('mzdg spet exnp qbax')
 
 def send_pending_notification(request_number):
-    EMAIL_ADDRESS = "upncts@up.edu.ph"
-    EMAIL_PASSWORD = "mzdg spet exnp qbax"
     subject = 'Citizen Charter Request Pending for 3 Minutes'
     body = f"Good day,\n\nRequest {request_number} has been pending for 3 minutes.\n\nPlease take necessary action.\n\nBest regards,\nUP NCTS REQUEST MANAGEMENT SYSTEM"
     msg = MIMEMultipart()
